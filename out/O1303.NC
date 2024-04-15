@@ -3,7 +3,8 @@ O1303(tiaoJian_input_3.xlsx)
 (DATE 2024.04.15)
 /M1
 (*********)
-GOTO#503
+GOTO#152
+#3000=1(***DATA ERR***)
 N11
 #151=21(T)
 #153=31(S)

@@ -2,7 +2,7 @@ import pandas as pd
 from datetime import datetime 
   
 # 读取Excel文件并生成NC宏程序 无条件类型 
-def generate_nc_macro_from_excel_1(file_path,o_path):  
+def generate_nc_macro_from_excel_1(file_path,o_path,macro):  
     # 读取Excel文件，header=0表示第一行是表头，作为DataFrame的列名  
     df = pd.read_excel(file_path, index_col=0,header=0, engine='openpyxl') 
     # 提取注释行（假设第二行是注释）  
@@ -23,7 +23,8 @@ def generate_nc_macro_from_excel_1(file_path,o_path):
     nc_macro.append(f'(DATE {current_date})')  
     nc_macro.append('/M1')  
     nc_macro.append('(*********)')  
-    nc_macro.append('GOTO#503') 
+    nc_macro.append(f'GOTO#{macro}') 
+    nc_macro.append('#3000=1(***DATA ERR***)')  
     # 遍历数据行生成NC宏的每一部分  
     for index, row in data.iterrows():  
         n_line_number = index 
@@ -242,10 +243,10 @@ def main():
     nc_macro = generate_nc_macro_from_excel_4(excel_file_path7,1100,502)  # 依据类型参数，选择主程序。
 
     excel_file_path0 = 'caiLiao_input.xlsx'  
-    nc_macro += generate_nc_macro_from_excel_1(excel_file_path0,1009)  # 依据类型参数，选择材料。 
+    nc_macro += generate_nc_macro_from_excel_1(excel_file_path0,1009,502)  # 依据类型参数，选择材料。 
 
     excel_file_path1 = 'type_input_1.xlsx'  
-    nc_macro += generate_nc_macro_from_excel_1(excel_file_path1,1101)  # 依据类型参数，输出关联属性1。
+    nc_macro += generate_nc_macro_from_excel_1(excel_file_path1,1101,503)  # 依据类型参数，输出关联属性1。
 
     excel_file_path2 = 'type_input_2.xlsx'  
     nc_macro += generate_nc_macro_from_excel_2(excel_file_path2,1102)  # 依据类型参数，输出关联属性2。
@@ -262,16 +263,16 @@ def main():
     nc_macro += generate_nc_macro_from_excel_4(excel_file_path6,1300,515)  # 依据材质别，选择材料别加工条件。
 
     excel_file_path4 = 'tiaoJian_input_1.xlsx'  
-    nc_macro += generate_nc_macro_from_excel_1(excel_file_path4,1301)  # 材质1 依据刀具H号，选择加工条件。
+    nc_macro += generate_nc_macro_from_excel_1(excel_file_path4,1301,152)  # 材质1 依据刀具H号，选择加工条件。
 
     excel_file_path8 = 'tiaoJian_input_2.xlsx'  
-    nc_macro += generate_nc_macro_from_excel_1(excel_file_path8,1302)  # 材质2 依据刀具H号，选择加工条件。
+    nc_macro += generate_nc_macro_from_excel_1(excel_file_path8,1302,152)  # 材质2 依据刀具H号，选择加工条件。
 
     excel_file_path9 = 'tiaoJian_input_3.xlsx'  
-    nc_macro += generate_nc_macro_from_excel_1(excel_file_path9,1303)  # 材质3 依据刀具H号，选择加工条件。
+    nc_macro += generate_nc_macro_from_excel_1(excel_file_path9,1303,152)  # 材质3 依据刀具H号，选择加工条件。
 
     excel_file_path10 = 'tiaoJian_input_4.xlsx'  
-    nc_macro += generate_nc_macro_from_excel_1(excel_file_path10,1304)  # 材质4 依据刀具H号，选择加工条件。
+    nc_macro += generate_nc_macro_from_excel_1(excel_file_path10,1304,152)  # 材质4 依据刀具H号，选择加工条件。
 
 
     with open(f'./out/All.NC', 'w') as f:  

@@ -3,7 +3,8 @@ O1009(caiLiao_input.xlsx)
 (DATE 2024.04.15)
 /M1
 (*********)
-GOTO#503
+GOTO#502
+#3000=1(***DATA ERR***)
 N101
 #515=1(S45C)£¨²ÄÖÊ£©
 GOTO99
